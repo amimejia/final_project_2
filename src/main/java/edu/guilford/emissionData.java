@@ -102,6 +102,14 @@ public class emissionData {
         this.nuclear = nuclear;
     }
 
+    //Create a toString Method
+    @Override
+    public String toString() {
+        return "emissionData [coal=" + coal + ", crudeOil=" + crudeOil + ", hydropower=" + hydropower + ", naturalGas="
+                + naturalGas + ", nuclear=" + nuclear + ", otherRenewables=" + otherRenewables
+                + ", traditionalBiofuels=" + traditionalBiofuels + ", year=" + year + "]";
+    }
+
     // @Override
     // public List<emissionData> readCSV(Path dataLocation) {
     //     List<emissionData> emissionDataList = new ArrayList<>();

@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javafx.stage.Stage;
@@ -36,6 +37,7 @@ public class EmissionPane extends BorderPane {
         xAxis.setLabel("Primary Energy Consumption in TWh");
         CategoryAxis yAxis = new CategoryAxis();
         yAxis.setLabel("Year");
+        
 
 
 
@@ -53,6 +55,25 @@ public class EmissionPane extends BorderPane {
 
         //Instantiate a List object in order to use the emissionDataList
         List<emissionData> emission_use_list = readCSV(dataLocation);
+        System.out.println(emission_use_list);
+
+        ArrayList<XYChart.Data<String, Double>> coalData = new ArrayList<>();
+        //Make coalData contain the data from the csv file
+        for (emissionData emissionData : emission_use_list) {
+            coalData.add(new XYChart.Data<>(emissionData.getYear(), emissionData.getCoal()));
+        }
+        System.out.println(coalData);
+
+        // ArrayList<XYChart.Data<String, Double>> solarData = new ArrayList<>();
+        // ArrayList<XYChart.Data<String, Double>> crudeOilData = new ArrayList<>();
+        // ArrayList<XYChart.Data<String, Double>> naturalGasData = new ArrayList<>();
+        // ArrayList<XYChart.Data<String, Double>> traditionalBiofuelsData = new ArrayList<>();
+        // ArrayList<XYChart.Data<String, Double>> otherRenewablesData = new ArrayList<>();
+        // ArrayList<XYChart.Data<String, Double>> hydropowerData = new ArrayList<>();
+
+        
+        
+        
         //create series for each column
         // XYChart.Series<Double, String> coalseries = new XYChart.Series<>();
         // XYChart.Series<Double, String> solarseries = new XYChart.Series<>();
@@ -75,11 +96,14 @@ public class EmissionPane extends BorderPane {
 
         //areaChart.getData().addAll(coalseries, solarseries, crudeOilseries, naturalGasseries, traditionalBiofuelsseries, otherRenewablesseries, hydropowerseries, nuclearseries);
 
-            //System.out.println(emissionDataList);
+    
 
 
 
     }
+
+    
+
 
     //Method for reading csv file
     private List<emissionData> readCSV(Path dataLocation) {
@@ -113,6 +137,4 @@ public class EmissionPane extends BorderPane {
         }
         return emissionDataList;
     }
-
-    //System.out.println(emissionDataList);
 }
