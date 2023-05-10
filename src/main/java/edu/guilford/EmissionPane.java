@@ -38,63 +38,81 @@ public class EmissionPane extends BorderPane {
         yAxis.setLabel("Year");
 
 
+
         //What's the difference between raw type and generic type of writing this?
         //StackedAreaChart<String, Number> stack = new StackedAreaChart<>(xAxis, yAxis);
-        StackedAreaChart<String, String> areaChart = new StackedAreaChart<>(xAxis, yAxis);
+        //StackedAreaChart<String, Double> areaChart = new StackedAreaChart<>(xAxis, yAxis);
 
         //Read the file and grab/read the data
-        // try {
-        //     dataLocation = Paths.get(Emission_Final_Project.class.getResource("/edu/guilford/cleaned_emissions_past_future.csv").toURI());
-        // } catch (URISyntaxException e) {
-        //     e.printStackTrace();
-        // }
-        // readCSV(dataLocation);
-
-        List<XYChart.Series<String, String>> seriesList = new ArrayList<>();
-        for (String fuelType : emissionDataList.get(0).getFuelType()) {
-            XYChart.Series<String, String> series = new XYChart.Series<>();
-            series.setName(fuelType);
-            for (emissionData emissionData : emissionDataList) {
-                if (data.)
-            }
-            seriesList.add(series);
+        try {
+            dataLocation = Paths.get(Emission_Final_Project.class.getResource("/edu/guilford/cleaned_emissions_past_future.csv").toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
+        readCSV(dataLocation);
+
+        //Instantiate a List object in order to use the emissionDataList
+        List<emissionData> emission_use_list = readCSV(dataLocation);
+        //create series for each column
+        // XYChart.Series<Double, String> coalseries = new XYChart.Series<>();
+        // XYChart.Series<Double, String> solarseries = new XYChart.Series<>();
+        // XYChart.Series<Double, String> crudeOilseries = new XYChart.Series<>();
+        // XYChart.Series<Double, String> naturalGasseries = new XYChart.Series<>();
+        // XYChart.Series<Double, String> traditionalBiofuelsseries = new XYChart.Series<>();
+        // XYChart.Series<Double, String> otherRenewablesseries = new XYChart.Series<>();
+        // XYChart.Series<Double, String> hydropowerseries = new XYChart.Series<>();
+        // XYChart.Series<Double, String> nuclearseries = new XYChart.Series<>();
+        // //for (emissionData emissionData : emission_use_list) {
+        //     coalseries.getData().add();
+        //     solarseries.getData().add(new XYChart.Data<>(emissionData.getSolar(), emissionData.getYear()));
+        //     crudeOilseries.getData().add(new XYChart.Data<>(emissionData.getCrudeOil(), emissionData.getYear()));
+        //     naturalGasseries.getData().add(new XYChart.Data<>(emissionData.getNaturalGas(), emissionData.getYear()));
+        //     traditionalBiofuelsseries.getData().add(new XYChart.Data<>(emissionData.getNaturalGas(), emissionData.getYear()));
+        //     otherRenewablesseries.getData().add(new XYChart.Data<>(emissionData.getTraditionalBiofuels(), emissionData.getYear()));
+        //     hydropowerseries.getData().add(new XYChart.Data<>(emissionData.getOtherRenewables(), emissionData.getYear()));
+        //     nuclearseries.getData().add(new XYChart.Data<>(emissionData.getHydropower(), emissionData.getYear()));
+        // //}
+
+        //areaChart.getData().addAll(coalseries, solarseries, crudeOilseries, naturalGasseries, traditionalBiofuelsseries, otherRenewablesseries, hydropowerseries, nuclearseries);
+
+            //System.out.println(emissionDataList);
 
 
 
     }
 
-    // //Method for reading csv file
-    // private List<emissionData> readCSV(Path dataLocation) {
-    //     List<emissionData> emissionDataList = new ArrayList<>();
-    //     BufferedReader br = null;
-    //     String line = "";
-    //     //String csvDelimiter = ",";
-    //     try {
-    //         br = new BufferedReader(new FileReader(dataLocation.toFile()));
-    //         //.readLine() reads the first line of the csv file
-    //         br.readLine();
-    //         while ((line = br.readLine())!= null) {
-    //             String[] column = line.split(",");
-    //             String year = column[0];
-    //             double coal  = Double.parseDouble(column[1]);
-    //             double solar = Double.parseDouble(column[2]);
-    //             double crudeOil = Double.parseDouble(column[3]);
-    //             double naturalGas = Double.parseDouble(column[4]);
-    //             double traditionalBiofuels = Double.parseDouble(column[5]);
-    //             double otherRenewables = Double.parseDouble(column[6]);
-    //             double hydropower = Double.parseDouble(column[7]);
-    //             double nuclear = Double.parseDouble(column[8]);
-    //             emissionDataList.add(new emissionData(year, coal, solar, crudeOil, naturalGas, traditionalBiofuels, otherRenewables, hydropower, nuclear));
-    //             line = br.readLine();
-    //         }
-    //         if (br != null) {
-    //             br.close();
-    //         }
-    //     } catch (IOException e) {
-    //         throw new IOError(e);
-    //     }
-    //     return emissionDataList;
-    // }
+    //Method for reading csv file
+    private List<emissionData> readCSV(Path dataLocation) {
+        List<emissionData> emissionDataList = new ArrayList<>();
+        BufferedReader br = null;
+        String line = "";
+        //String csvDelimiter = ",";
+        try {
+            br = new BufferedReader(new FileReader(dataLocation.toFile()));
+            //.readLine() reads the first line of the csv file
+            br.readLine();
+            while ((line = br.readLine())!= null) {
+                String[] column = line.split(",");
+                String year = column[0];
+                double coal  = Double.parseDouble(column[1]);
+                double solar = Double.parseDouble(column[2]);
+                double crudeOil = Double.parseDouble(column[3]);
+                double naturalGas = Double.parseDouble(column[4]);
+                double traditionalBiofuels = Double.parseDouble(column[5]);
+                double otherRenewables = Double.parseDouble(column[6]);
+                double hydropower = Double.parseDouble(column[7]);
+                double nuclear = Double.parseDouble(column[8]);
+                emissionDataList.add(new emissionData(year, coal, solar, crudeOil, naturalGas, traditionalBiofuels, otherRenewables, hydropower, nuclear));
+                line = br.readLine();
+            }
+            if (br != null) {
+                br.close();
+            }
+        } catch (IOException e) {
+            throw new IOError(e);
+        }
+        return emissionDataList;
+    }
 
+    //System.out.println(emissionDataList);
 }
