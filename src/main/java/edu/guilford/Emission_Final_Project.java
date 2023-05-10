@@ -23,8 +23,8 @@ public class Emission_Final_Project extends Application {
         //Instantiate a svidata object
         EmissionPane emissionPane = new EmissionPane();
 
-        //Instantiate a sviPane pane
-        //root.getChildren().add(new sviPane(svi));
+        //Instantiate a emissionPane pane
+        root.getChildren().add(emissionPane);
         scene = new Scene(root, 1000, 480);
         stage.setScene(scene);
         stage.show();
