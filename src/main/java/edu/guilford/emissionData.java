@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 //import javax.swing.DefaultBoundedRangeModel;
 
 public class emissionData {
-    private String year;
+    private double year;
     private double coal;
     private double solar;
     private double crudeOil;
@@ -30,6 +30,11 @@ public class emissionData {
     public emissionData(String year, double coal, double solar, double crudeOil, double naturalGas,
             double traditionalBiofuels, double otherRenewables, double hydropower, double nuclear) {
     }
+
+    public emissionData(double year, double coal) {
+        
+    }
+
     //Constructor
     public emissionData(){
 
@@ -47,10 +52,10 @@ public class emissionData {
     }
 
     //Getters and setters
-    public String getYear() {
+    public double getYear() {
         return year;
     }
-    public void setYear(String year) {
+    public void setYear(Double year) {
         this.year = year;
     }
     public double getCoal() {
@@ -109,6 +114,15 @@ public class emissionData {
                 + naturalGas + ", nuclear=" + nuclear + ", otherRenewables=" + otherRenewables
                 + ", traditionalBiofuels=" + traditionalBiofuels + ", year=" + year + "]";
     }
+
+    public String toString_coal(){
+        return "emissionData [year=" + year + ", coal=" + coal + "]";
+    }
+
+    // @Override
+    // public String toString(){
+    //     return 
+    // }
 
     // @Override
     // public List<emissionData> readCSV(Path dataLocation) {
