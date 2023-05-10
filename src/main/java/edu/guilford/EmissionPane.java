@@ -25,9 +25,6 @@ public class EmissionPane extends BorderPane {
 
     private Path dataLocation;
     private StackedAreaChart<Double, Double> areaChart;
-
-    // This seems like a basic question but now I'm wondering if the data provided
-    // by the reading through the method becomes an attribute of emissionPane
     private List<EmissionData_Coal> emission_use_coal_list;
 
     // Constructor
@@ -37,7 +34,7 @@ public class EmissionPane extends BorderPane {
         xAxis.setLabel("Primary Energy Consumption in TWh");
         CategoryAxis yAxis = new CategoryAxis();
         yAxis.setLabel("Year");
-
+        
         // Read the file and grab/read the data
         try {
             dataLocation = Paths.get(Emission_Final_Project.class
@@ -65,6 +62,7 @@ public class EmissionPane extends BorderPane {
         StackedAreaChart<Double, Double> areaChart = new StackedAreaChart<>(xAxis, yAxis);
         areaChart.getData().addAll(coalseries);
 
+        this.setCenter(areaChart);
         
 
     }
