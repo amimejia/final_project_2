@@ -22,8 +22,8 @@ public class emissionData {
     private double otherRenewables;
     private double hydropower;
     private double nuclear;
-    private double fuelType;
-    private Path dataLocation;
+    //private double fuelType;
+    //private Path dataLocation;
 
 
     //Constructor
@@ -32,12 +32,18 @@ public class emissionData {
     }
     //Constructor
     public emissionData(){
-        try {
-                dataLocation = Paths.get(Emission_Final_Project.class.getResource("/edu/guilford/cleaned_emissions_past_future.csv").toURI());
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-            readCSV(dataLocation);
+
+        // try {
+        //     dataLocation = Paths.get(Emission_Final_Project.class.getResource("/edu/guilford/cleaned_emissions_past_future.csv").toURI());
+        // } catch (URISyntaxException e) {
+        //     e.printStackTrace();
+        //}
+        // try {
+        //         dataLocation = Paths.get(Emission_Final_Project.class.getResource("/edu/guilford/cleaned_emissions_past_future.csv").toURI());
+        //     } catch (URISyntaxException e) {
+        //         e.printStackTrace();
+        //     }
+        //     readCSV(dataLocation);
     }
 
     //Getters and setters
@@ -96,38 +102,38 @@ public class emissionData {
         this.nuclear = nuclear;
     }
 
-    @Override
-    public List<emissionData> readCSV(Path dataLocation) {
-        List<emissionData> emissionDataList = new ArrayList<>();
-        BufferedReader br = null;
-        String line = "";
-        //String csvDelimiter = ",";
-        try {
-            br = new BufferedReader(new FileReader(dataLocation.toFile()));
-            //.readLine() reads the first line of the csv file
-            br.readLine();
-            while ((line = br.readLine())!= null) {
-                String[] column = line.split(",");
-                String year = column[0];
-                double coal  = Double.parseDouble(column[1]);
-                double solar = Double.parseDouble(column[2]);
-                double crudeOil = Double.parseDouble(column[3]);
-                double naturalGas = Double.parseDouble(column[4]);
-                double traditionalBiofuels = Double.parseDouble(column[5]);
-                double otherRenewables = Double.parseDouble(column[6]);
-                double hydropower = Double.parseDouble(column[7]);
-                double nuclear = Double.parseDouble(column[8]);
-                emissionDataList.add(new emissionData(year, coal, solar, crudeOil, naturalGas, traditionalBiofuels, otherRenewables, hydropower, nuclear));
-                line = br.readLine();
-            }
-            if (br != null) {
-                br.close();
-            }
-        } catch (IOException e) {
-            throw new IOError(e);
-        }
-        return emissionDataList;
-    }
+    // @Override
+    // public List<emissionData> readCSV(Path dataLocation) {
+    //     List<emissionData> emissionDataList = new ArrayList<>();
+    //     BufferedReader br = null;
+    //     String line = "";
+    //     //String csvDelimiter = ",";
+    //     try {
+    //         br = new BufferedReader(new FileReader(dataLocation.toFile()));
+    //         //.readLine() reads the first line of the csv file
+    //         br.readLine();
+    //         while ((line = br.readLine())!= null) {
+    //             String[] column = line.split(",");
+    //             String year = column[0];
+    //             double coal  = Double.parseDouble(column[1]);
+    //             double solar = Double.parseDouble(column[2]);
+    //             double crudeOil = Double.parseDouble(column[3]);
+    //             double naturalGas = Double.parseDouble(column[4]);
+    //             double traditionalBiofuels = Double.parseDouble(column[5]);
+    //             double otherRenewables = Double.parseDouble(column[6]);
+    //             double hydropower = Double.parseDouble(column[7]);
+    //             double nuclear = Double.parseDouble(column[8]);
+    //             emissionDataList.add(new emissionData(year, coal, solar, crudeOil, naturalGas, traditionalBiofuels, otherRenewables, hydropower, nuclear));
+    //             line = br.readLine();
+    //         }
+    //         if (br != null) {
+    //             br.close();
+    //         }
+    //     } catch (IOException e) {
+    //         throw new IOError(e);
+    //     }
+    //     return emissionDataList;
+    // }
 
 
 }
