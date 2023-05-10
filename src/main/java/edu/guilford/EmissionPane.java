@@ -59,9 +59,9 @@ public class EmissionPane extends BorderPane {
 
         ArrayList<XYChart.Data<String, Double>> coalData = new ArrayList<>();
         //Make coalData contain the data from the csv file
-        for (emissionData emissionData : emission_use_list) {
-            coalData.add(new XYChart.Data<>(emissionData.getYear(), emissionData.getCoal()));
-        }
+        // for (emissionData emissionData : emission_use_list) {
+        //     coalData.add(new XYChart.Data<>(emissionData.getYear(), emissionData.getCoal()));
+        // }
         System.out.println(coalData);
 
         // ArrayList<XYChart.Data<String, Double>> solarData = new ArrayList<>();
@@ -110,6 +110,7 @@ public class EmissionPane extends BorderPane {
         List<emissionData> emissionDataList = new ArrayList<>();
         BufferedReader br = null;
         String line = "";
+
         //String csvDelimiter = ",";
         try {
             br = new BufferedReader(new FileReader(dataLocation.toFile()));
@@ -117,16 +118,16 @@ public class EmissionPane extends BorderPane {
             br.readLine();
             while ((line = br.readLine())!= null) {
                 String[] column = line.split(",");
-                String year = column[0];
+                double year = Double.parseDouble(column[0]);
                 double coal  = Double.parseDouble(column[1]);
-                double solar = Double.parseDouble(column[2]);
-                double crudeOil = Double.parseDouble(column[3]);
-                double naturalGas = Double.parseDouble(column[4]);
-                double traditionalBiofuels = Double.parseDouble(column[5]);
-                double otherRenewables = Double.parseDouble(column[6]);
-                double hydropower = Double.parseDouble(column[7]);
-                double nuclear = Double.parseDouble(column[8]);
-                emissionDataList.add(new emissionData(year, coal, solar, crudeOil, naturalGas, traditionalBiofuels, otherRenewables, hydropower, nuclear));
+                // double solar = Double.parseDouble(column[2]);
+                // double crudeOil = Double.parseDouble(column[3]);
+                // double naturalGas = Double.parseDouble(column[4]);
+                // double traditionalBiofuels = Double.parseDouble(column[5]);
+                // double otherRenewables = Double.parseDouble(column[6]);
+                // double hydropower = Double.parseDouble(column[7]);
+                // double nuclear = Double.parseDouble(column[8]);
+                emissionDataList.add(new emissionData(year, coal));
                 line = br.readLine();
             }
             if (br != null) {
