@@ -1,6 +1,5 @@
 package edu.guilford;
 
-import java.time.Year;
 
 public class EmissionData_Coal {
     private double year;
