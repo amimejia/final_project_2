@@ -6,13 +6,11 @@ import java.io.IOError;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import javafx.geometry.Insets;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedAreaChart;
 import javafx.scene.chart.XYChart;
 
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -28,7 +26,7 @@ import java.util.List;
 
 import javafx.stage.Stage;
 
-public class EmissionPane extends SplitPane {
+public class EmissionPane extends BorderPane {
 
     private Path dataLocation;
     private StackedAreaChart<Double, Double> areaChart;
@@ -40,7 +38,7 @@ public class EmissionPane extends SplitPane {
         xAxis.setLabel("Year");
         xAxis.setAutoRanging(false);
         xAxis.setLowerBound(1800);
-        xAxis.setUpperBound(2020);
+        xAxis.setUpperBound(2008);
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Primary Energy Consumption in TWh");
 
@@ -204,17 +202,8 @@ public class EmissionPane extends SplitPane {
         });
 
         CheckBox.getChildren().addAll(coalCheckBox, solarCheckBox, crudeOilCheckBox, naturalGasCheckBox, traditionalBiofuelCheckBox, otherRenewablesCheckBox, hydropowerCheckBox, nuclearCheckBox);
-        StackPane leftPane = new StackPane();
-        leftPane.getChildren().add(areaChart);
-        leftPane.getChildren().add(CheckBox);
-        BorderPane borderPane = new BorderPane();
-        borderPane.setLeft(leftPane);
-        //borderPane.setPadding(new Insets(10));
-
-
-        // BorderPane leftPane = new BorderPane(areaChart);
-        // leftPane.setCenter(CheckBox);
-        // SplitPane splitPane = new SplitPane(leftPane, null);
+        this.setBottom(CheckBox);
+        this.setCenter(areaChart);
     }
 
     // Method for reading csv file
