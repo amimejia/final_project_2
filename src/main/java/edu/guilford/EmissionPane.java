@@ -32,19 +32,7 @@ public class EmissionPane extends BorderPane {
 
     private Path dataLocation;
     private StackedAreaChart<Double, Double> areaChart;
-    // private List<EmissionData_Coal> emission_use_coal_list;
-    // private List<Data_Solar> Data_use_solar_list;
-    // private List<Data_CrudeOil> Data_use_crudeoil_list;
-
     
-    // private ArrayList<XYChart.Data<Double, Double>> coalData = new ArrayList<>();
-    // private ArrayList<XYChart.Data<Double, Double>> solarData = new ArrayList<>();
-    // private ArrayList<XYChart.Data<Double, Double>> crudeOilData = new ArrayList<>();
-    // private ArrayList<XYChart.Data<Double, Double>> naturalGasData = new ArrayList<>();
-    // private ArrayList<XYChart.Data<Double, Double>> traditionalBiofuels = new ArrayList<>();
-    // private ArrayList<XYChart.Data<Double, Double>> hydropowerData = new ArrayList<>();
-    // private ArrayList<XYChart.Data<Double, Double>> nuclearData = new ArrayList<>();
-
     // Constructor
     public EmissionPane() {
 
@@ -71,6 +59,9 @@ public class EmissionPane extends BorderPane {
         List<Data_CrudeOil> Data_use_crudeoil_list = readCSV_crudeoil(dataLocation);
         List<Data_NaturalGas> Data_use_naturalgas_list = readCSV_naturalgas(dataLocation);
         List<Data_TraditionalBiofuel> Data_use_traditionalbiofuels_list = readCSV_traditionalbiofuel(dataLocation);
+        List<Data_OtherRenewables> Data_use_otherrenewables_list = readCSV_OtherRenewables(dataLocation);
+        List<Data_Hydropower> Data_use_hydropower_list = readCSV_Hydropower(dataLocation);
+        List<Data_Nuclear> Data_use_nuclear_list = readCSV_Nuclear(dataLocation);
 
         //System.out.println(emission_use_coal_list);
 
@@ -95,6 +86,18 @@ public class EmissionPane extends BorderPane {
         for (Data_TraditionalBiofuel data : Data_use_traditionalbiofuels_list) {
             traditionalBiofuels.add(new XYChart.Data<>((data.getYear()), data.getTraditionalbiofuel()));
         }
+        ArrayList<XYChart.Data<Double, Double>> otherRenewables = new ArrayList<>();
+        for (Data_OtherRenewables data : Data_use_otherrenewables_list) {
+            otherRenewables.add(new XYChart.Data<>((data.getYear()), data.getOtherRenewables()));
+        }
+        ArrayList<XYChart.Data<Double, Double>> hydropower = new ArrayList<>();
+        for (Data_Hydropower data : Data_use_hydropower_list) {
+            hydropower.add(new XYChart.Data<>((data.getYear()), data.getHydropower()));
+        }
+        ArrayList<XYChart.Data<Double, Double>> nuclear = new ArrayList<>();
+        for (Data_Nuclear data : Data_use_nuclear_list) {
+            nuclear.add(new XYChart.Data<>((data.getYear()), data.getNuclear()));
+        }
 
 
         // Make XYChart.Series objects
@@ -103,6 +106,9 @@ public class EmissionPane extends BorderPane {
         XYChart.Series<Double, Double> crudeoilseries = new XYChart.Series<>();
         XYChart.Series<Double, Double> naturalgasseries = new XYChart.Series<>();
         XYChart.Series<Double, Double> traditionalbiofuelseries = new XYChart.Series<>();
+        XYChart.Series<Double, Double> otherrenewableseries = new XYChart.Series<>();
+        XYChart.Series<Double, Double> hydropowerseries = new XYChart.Series<>();
+        XYChart.Series<Double, Double> nuclearseries = new XYChart.Series<>();
 
         // Add the data to the series
         coalseries.getData().addAll(coalData);
@@ -110,18 +116,15 @@ public class EmissionPane extends BorderPane {
         crudeoilseries.getData().addAll(crudeOilData);
         naturalgasseries.getData().addAll(naturalGasData);
         traditionalbiofuelseries.getData().addAll(traditionalBiofuels);
+        otherrenewableseries.getData().addAll(otherRenewables);
+        hydropowerseries.getData().addAll(hydropower);
+        nuclearseries.getData().addAll(nuclear);
 
         
 
         // Instantiate a StackedAreaChart object
         StackedAreaChart<Double, Double> areaChart = new StackedAreaChart(xAxis, yAxis);
-
-        // Add the series to the areaChart
-        // areaChart.getData().addAll(coalseries);
-        // areaChart.getData().addAll(solarseries);
-        // areaChart.getData().addAll(crudeoilseries);
-        // areaChart.getData().addAll(naturalgasseries);
-        // areaChart.getData().addAll(traditionalbiofuelseries);
+        areaChart.setTitle("Primary Energy Consumption by Fuel Type");
         
         this.setCenter(areaChart);
 
@@ -131,11 +134,17 @@ public class EmissionPane extends BorderPane {
         CheckBox crudeOilCheckBox = new CheckBox("Crude Oil");
         CheckBox naturalGasCheckBox = new CheckBox("Natural Gas");
         CheckBox traditionalBiofuelCheckBox = new CheckBox("Traditional Biofuel");
+        CheckBox otherRenewablesCheckBox = new CheckBox("Other Renewables");
+        CheckBox hydropowerCheckBox = new CheckBox("Hydropower");
+        CheckBox nuclearCheckBox = new CheckBox("Nuclear");
         coalCheckBox.setStyle("-fx-text-fill: red;-fx-font-weight: bold;");
         solarCheckBox.setStyle("-fx-text-fill: orange;-fx-font-weight: bold;");
         crudeOilCheckBox.setStyle("-fx-text-fill: green;-fx-font-weight: bold;");
-        naturalGasCheckBox.setStyle("-fx-text-fill: blue;-fx-font-weight: bold;");
-        traditionalBiofuelCheckBox.setStyle("-fx-text-fill: purple;-fx-font-weight: bold;");
+        naturalGasCheckBox.setStyle("-fx-text-fill: lightblue;-fx-font-weight: bold;");
+        traditionalBiofuelCheckBox.setStyle("-fx-text-fill: blue;-fx-font-weight: bold;");
+        otherRenewablesCheckBox.setStyle("-fx-text-fill: purple;-fx-font-weight: bold;");
+        hydropowerCheckBox.setStyle("-fx-text-fill: brown;-fx-font-weight: bold;");
+        nuclearCheckBox.setStyle("-fx-text-fill: black;-fx-font-weight: bold;");
 
         coalCheckBox.setOnAction(e -> {
             if (coalCheckBox.isSelected()) {
@@ -172,8 +181,29 @@ public class EmissionPane extends BorderPane {
                 areaChart.getData().remove(traditionalbiofuelseries);
             }
         });
-        
-        CheckBox.getChildren().addAll(coalCheckBox, solarCheckBox, crudeOilCheckBox, naturalGasCheckBox, traditionalBiofuelCheckBox);
+        otherRenewablesCheckBox.setOnAction(e -> {
+            if (otherRenewablesCheckBox.isSelected()) {
+                areaChart.getData().add(otherrenewableseries);
+            } else {
+                areaChart.getData().remove(otherrenewableseries);
+            }
+        });
+        hydropowerCheckBox.setOnAction(e -> {
+            if (hydropowerCheckBox.isSelected()) {
+                areaChart.getData().add(hydropowerseries);
+            } else {
+                areaChart.getData().remove(hydropowerseries);
+            }
+        });
+        nuclearCheckBox.setOnAction(e -> {
+            if (nuclearCheckBox.isSelected()) {
+                areaChart.getData().add(nuclearseries);
+            } else {
+                areaChart.getData().remove(nuclearseries);
+            }
+        });
+
+        CheckBox.getChildren().addAll(coalCheckBox, solarCheckBox, crudeOilCheckBox, naturalGasCheckBox, traditionalBiofuelCheckBox, otherRenewablesCheckBox, hydropowerCheckBox, nuclearCheckBox);
         this.setBottom(CheckBox);
     }
 
@@ -297,6 +327,75 @@ public class EmissionPane extends BorderPane {
         }
         return Data_TraditionalBiofuels;
     }
+    private List<Data_OtherRenewables> readCSV_OtherRenewables(Path dataLocation){
+        List<Data_OtherRenewables> Data_OtherRenewables = new ArrayList<>();
+        BufferedReader br = null;
+        String line = "";
+        try {
+            br = new BufferedReader(new FileReader(dataLocation.toFile()));
+            // .readLine() reads the first line of the csv file
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] column = line.split(",");
+                double year = Double.parseDouble(column[0]);
+                double otherRenewables = Double.parseDouble(column[6]);
+                Data_OtherRenewables.add(new Data_OtherRenewables(year, otherRenewables));
+                line = br.readLine();
+            }
+            if (br != null) {
+                br.close();
+            }
+        } catch (IOException e) {
+            throw new IOError(e);
+        }
+        return Data_OtherRenewables;
+    }
 
+    private List<Data_Hydropower> readCSV_Hydropower(Path dataLocation){
+        List<Data_Hydropower> Data_Hydropower = new ArrayList<>();
+        BufferedReader br = null;
+        String line = "";
+        try {
+            br = new BufferedReader(new FileReader(dataLocation.toFile()));
+            // .readLine() reads the first line of the csv file
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] column = line.split(",");
+                double year = Double.parseDouble(column[0]);
+                double hydropower = Double.parseDouble(column[7]);
+                Data_Hydropower.add(new Data_Hydropower(year, hydropower));
+                line = br.readLine();
+            }
+            if (br != null) {
+                br.close();
+            }
+        } catch (IOException e) {
+            throw new IOError(e);
+        }
+        return Data_Hydropower;
+    }
+    private List<Data_Nuclear> readCSV_Nuclear(Path dataLocation){
+        List<Data_Nuclear> Data_Nuclear = new ArrayList<>();
+        BufferedReader br = null;
+        String line = "";
+        try {
+            br = new BufferedReader(new FileReader(dataLocation.toFile()));
+            // .readLine() reads the first line of the csv file
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] column = line.split(",");
+                double year = Double.parseDouble(column[0]);
+                double nuclear = Double.parseDouble(column[8]);
+                Data_Nuclear.add(new Data_Nuclear(year, nuclear));
+                line = br.readLine();
+            }
+            if (br != null) {
+                br.close();
+            }
+        } catch (IOException e) {
+            throw new IOError(e);
+        }
+        return Data_Nuclear;
+    }
     
 }
