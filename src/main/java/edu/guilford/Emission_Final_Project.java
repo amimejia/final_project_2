@@ -10,7 +10,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * JavaFX App
+ * JavaFX App called Emission_Final_Project
+ * Used to display the data from EmissionPane.java
+ * @param scene
+ * @return start
+ * @throws IOException
+ * 
  */
 public class Emission_Final_Project extends Application {
 

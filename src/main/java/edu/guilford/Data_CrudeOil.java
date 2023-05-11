@@ -1,5 +1,10 @@
 package edu.guilford;
-
+/**
+ * Class to hold the data for the crude oil consumption
+ * @param year
+ * @param crudeoil
+ * @return toString
+ */
 public class Data_CrudeOil {
     private double year;
     private double crudeoil;

@@ -1,5 +1,10 @@
 package edu.guilford;
-
+/**
+ * Class to hold the data for the hydropower consumption
+ * @param year
+ * @param hydropower
+ * @return toString
+ */
 public class Data_Hydropower {
     private double year;
     private double hydropower;

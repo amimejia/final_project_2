@@ -1,5 +1,11 @@
 package edu.guilford;
-
+/**
+ * Class to hold the data for the natural gas consumption
+ * @param year
+ * @param nuclear
+ * @return toString
+ * 
+ */
 public class Data_NaturalGas {
     private double year;
     private double naturalgas;

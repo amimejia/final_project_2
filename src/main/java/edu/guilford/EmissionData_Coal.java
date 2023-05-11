@@ -1,6 +1,11 @@
 package edu.guilford;
 
-
+/**
+ * Class to hold the data for the coal consumption
+ * @param year
+ * @param coal
+ * @return toString
+ */
 public class EmissionData_Coal {
     private double year;
     private double coal;

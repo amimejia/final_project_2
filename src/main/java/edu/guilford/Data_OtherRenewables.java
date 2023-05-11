@@ -1,5 +1,10 @@
 package edu.guilford;
-
+/**
+ * Class to hold the data for the other renewables consumption
+ * @param year
+ * @param otherRenewables
+ * @return toString
+ */
 public class Data_OtherRenewables {
     private double year;
     private double otherRenewables;

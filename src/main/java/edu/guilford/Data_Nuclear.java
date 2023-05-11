@@ -1,5 +1,10 @@
 package edu.guilford;
-
+/**
+ * Class to hold the data for the nuclear consumption
+ * @param year
+ * @param nuclear
+ * @return toString
+ */
 public class Data_Nuclear {
     private double year;
     private double nuclear;

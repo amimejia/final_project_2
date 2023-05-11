@@ -1,5 +1,10 @@
 package edu.guilford;
-
+/**
+ * Class to hold the data for the traditional biofuel consumption
+ * @param year
+ * @param traditionalbiofuel
+ * @return toString
+ */
 public class Data_TraditionalBiofuel {
     private double year;
     private double traditionalbiofuel;

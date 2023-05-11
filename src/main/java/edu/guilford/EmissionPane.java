@@ -25,15 +25,23 @@ import java.util.List;
 //import javax.xml.transform.SourceLocator;
 
 import javafx.stage.Stage;
-
+/**
+ * Emission Pane Class extends BorderPane in order to display the StackedAreaChart
+ * @param dataLocation
+ * @param areaChart
+ * 
+ */
 public class EmissionPane extends BorderPane {
 
     private Path dataLocation;
-    private StackedAreaChart<Double, Double> areaChart;
+    // private StackedAreaChart<Double, Double> areaChart;
+    // private Pane CheckBox;
     
     // Constructor
     public EmissionPane() {
-
+/**
+ * Instantiation of NumberAxis object for the x and y axis
+ */
         NumberAxis xAxis = new NumberAxis();
         xAxis.setLabel("Year");
         xAxis.setAutoRanging(false);
@@ -41,7 +49,10 @@ public class EmissionPane extends BorderPane {
         xAxis.setUpperBound(2008);
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Primary Energy Consumption in TWh");
-
+/**
+ * Instantiation of Path object for the dataLocation
+ * 
+ */
         //Read the file and grab/read the data
         try {
             dataLocation = Paths.get(Emission_Final_Project.class
@@ -50,6 +61,10 @@ public class EmissionPane extends BorderPane {
             e.printStackTrace();
         }
         readCSV(dataLocation);
+
+/**
+ * Instantiation of List objects for the emissionDataList
+ */
 
         // Instantiate a List object in order to use the emissionDataList
         List<EmissionData_Coal> emission_use_coal_list = readCSV(dataLocation);
@@ -62,7 +77,9 @@ public class EmissionPane extends BorderPane {
         List<Data_Nuclear> Data_use_nuclear_list = readCSV_Nuclear(dataLocation);
 
         //System.out.println(emission_use_coal_list);
-
+/**
+ * Instantiation of ArrayList objects for the coalData, solarData, crudeOilData, naturalGasData, traditionalBiofuels, otherRenewables, hydropower, and nuclear
+ */
         //Make an ArrayList of XYChart.Data objects
         ArrayList<XYChart.Data<Double, Double>> coalData = new ArrayList<>();
         for (EmissionData_Coal data : emission_use_coal_list) {
@@ -97,7 +114,9 @@ public class EmissionPane extends BorderPane {
             nuclear.add(new XYChart.Data<>((data.getYear()), data.getNuclear()));
         }
 
-
+/**
+ * Instantiation of XYChart.Series objects for the coalseries, solarseries, crudeoilseries, naturalgasseries, traditionalbiofuelseries, otherrenewableseries, hydropowerseries, and nuclearseries
+ */
         // Make XYChart.Series objects
         XYChart.Series<Double, Double> coalseries = new XYChart.Series<>();
         XYChart.Series<Double, Double> solarseries = new XYChart.Series<>();
@@ -107,7 +126,9 @@ public class EmissionPane extends BorderPane {
         XYChart.Series<Double, Double> otherrenewableseries = new XYChart.Series<>();
         XYChart.Series<Double, Double> hydropowerseries = new XYChart.Series<>();
         XYChart.Series<Double, Double> nuclearseries = new XYChart.Series<>();
-
+/**
+ * Adding each series to the areaChart
+ */
         // Add the data to the series
         coalseries.getData().addAll(coalData);
         solarseries.getData().addAll(solarData);
@@ -119,12 +140,16 @@ public class EmissionPane extends BorderPane {
         nuclearseries.getData().addAll(nuclear);
 
         
-
+/**
+ * Instantiation of StackedAreaChart object for the areaChart
+ */
         // Instantiate a StackedAreaChart object
         StackedAreaChart<Double, Double> areaChart = new StackedAreaChart(xAxis, yAxis);
         areaChart.setTitle("Primary Energy Consumption by Fuel Type");
         
-        //this.setCenter(areaChart);
+/**
+ * Creation of the CheckBox object for the CheckBox for each fueltype
+ */
 
         HBox CheckBox = new HBox();
         CheckBox coalCheckBox = new CheckBox("Coal");
@@ -144,6 +169,9 @@ public class EmissionPane extends BorderPane {
         hydropowerCheckBox.setStyle("-fx-text-fill: brown;-fx-font-weight: bold;");
         nuclearCheckBox.setStyle("-fx-text-fill: black;-fx-font-weight: bold;");
 
+/**
+ * Event Handlers for each CheckBox
+ */
         coalCheckBox.setOnAction(e -> {
             if (coalCheckBox.isSelected()) {
                 areaChart.getData().add(coalseries);
@@ -200,12 +228,19 @@ public class EmissionPane extends BorderPane {
                 areaChart.getData().remove(nuclearseries);
             }
         });
-
+/**
+ * Final step of Constructor: Adding each CheckBox to the CheckBox object and adding the areaChart to the center of the BorderPane
+ */
         CheckBox.getChildren().addAll(coalCheckBox, solarCheckBox, crudeOilCheckBox, naturalGasCheckBox, traditionalBiofuelCheckBox, otherRenewablesCheckBox, hydropowerCheckBox, nuclearCheckBox);
         this.setBottom(CheckBox);
         this.setCenter(areaChart);
     }
-
+/**
+ * Methods for reading the csv file and adding the data to the ArrayList for each fueltype
+ * @param dataLocation
+ * @return
+ * @throws IOException
+ */
     // Method for reading csv file
     private List<EmissionData_Coal> readCSV(Path dataLocation) {
         List<EmissionData_Coal> EmissionData_Coal = new ArrayList<>();
