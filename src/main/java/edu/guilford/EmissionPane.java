@@ -6,17 +6,17 @@ import java.io.IOError;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import javafx.scene.Node;
-import javafx.scene.chart.BubbleChart;
-import javafx.scene.chart.CategoryAxis;
+import javafx.geometry.Insets;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedAreaChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
+
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,7 +28,7 @@ import java.util.List;
 
 import javafx.stage.Stage;
 
-public class EmissionPane extends BorderPane {
+public class EmissionPane extends SplitPane {
 
     private Path dataLocation;
     private StackedAreaChart<Double, Double> areaChart;
@@ -126,7 +126,7 @@ public class EmissionPane extends BorderPane {
         StackedAreaChart<Double, Double> areaChart = new StackedAreaChart(xAxis, yAxis);
         areaChart.setTitle("Primary Energy Consumption by Fuel Type");
         
-        this.setCenter(areaChart);
+        //this.setCenter(areaChart);
 
         HBox CheckBox = new HBox();
         CheckBox coalCheckBox = new CheckBox("Coal");
@@ -204,7 +204,17 @@ public class EmissionPane extends BorderPane {
         });
 
         CheckBox.getChildren().addAll(coalCheckBox, solarCheckBox, crudeOilCheckBox, naturalGasCheckBox, traditionalBiofuelCheckBox, otherRenewablesCheckBox, hydropowerCheckBox, nuclearCheckBox);
-        this.setBottom(CheckBox);
+        StackPane leftPane = new StackPane();
+        leftPane.getChildren().add(areaChart);
+        leftPane.getChildren().add(CheckBox);
+        BorderPane borderPane = new BorderPane();
+        borderPane.setLeft(leftPane);
+        //borderPane.setPadding(new Insets(10));
+
+
+        // BorderPane leftPane = new BorderPane(areaChart);
+        // leftPane.setCenter(CheckBox);
+        // SplitPane splitPane = new SplitPane(leftPane, null);
     }
 
     // Method for reading csv file
