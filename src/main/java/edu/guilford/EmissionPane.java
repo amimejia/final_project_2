@@ -12,7 +12,10 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedAreaChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 import java.nio.file.Path;
@@ -114,14 +117,64 @@ public class EmissionPane extends BorderPane {
         StackedAreaChart<Double, Double> areaChart = new StackedAreaChart(xAxis, yAxis);
 
         // Add the series to the areaChart
-        areaChart.getData().addAll(coalseries);
-        areaChart.getData().addAll(solarseries);
-        areaChart.getData().addAll(crudeoilseries);
-        areaChart.getData().addAll(naturalgasseries);
-        areaChart.getData().addAll(traditionalbiofuelseries);
+        // areaChart.getData().addAll(coalseries);
+        // areaChart.getData().addAll(solarseries);
+        // areaChart.getData().addAll(crudeoilseries);
+        // areaChart.getData().addAll(naturalgasseries);
+        // areaChart.getData().addAll(traditionalbiofuelseries);
         
         this.setCenter(areaChart);
 
+        HBox CheckBox = new HBox();
+        CheckBox coalCheckBox = new CheckBox("Coal");
+        CheckBox solarCheckBox = new CheckBox("Solar");
+        CheckBox crudeOilCheckBox = new CheckBox("Crude Oil");
+        CheckBox naturalGasCheckBox = new CheckBox("Natural Gas");
+        CheckBox traditionalBiofuelCheckBox = new CheckBox("Traditional Biofuel");
+        coalCheckBox.setStyle("-fx-text-fill: red;-fx-font-weight: bold;");
+        solarCheckBox.setStyle("-fx-text-fill: orange;-fx-font-weight: bold;");
+        crudeOilCheckBox.setStyle("-fx-text-fill: green;-fx-font-weight: bold;");
+        naturalGasCheckBox.setStyle("-fx-text-fill: blue;-fx-font-weight: bold;");
+        traditionalBiofuelCheckBox.setStyle("-fx-text-fill: purple;-fx-font-weight: bold;");
+
+        coalCheckBox.setOnAction(e -> {
+            if (coalCheckBox.isSelected()) {
+                areaChart.getData().add(coalseries);
+            } else {
+                areaChart.getData().remove(coalseries);
+            }
+        });
+        solarCheckBox.setOnAction(e -> {
+            if (solarCheckBox.isSelected()) {
+                areaChart.getData().add(solarseries);
+            } else {
+                areaChart.getData().remove(solarseries);
+            }
+        });
+        crudeOilCheckBox.setOnAction(e -> {
+            if (crudeOilCheckBox.isSelected()) {
+                areaChart.getData().add(crudeoilseries);
+            } else {
+                areaChart.getData().remove(crudeoilseries);
+            }
+        });
+        naturalGasCheckBox.setOnAction(e -> {
+            if (naturalGasCheckBox.isSelected()) {
+                areaChart.getData().add(naturalgasseries);
+            } else {
+                areaChart.getData().remove(naturalgasseries);
+            }
+        });
+        traditionalBiofuelCheckBox.setOnAction(e -> {
+            if (traditionalBiofuelCheckBox.isSelected()) {
+                areaChart.getData().add(traditionalbiofuelseries);
+            } else {
+                areaChart.getData().remove(traditionalbiofuelseries);
+            }
+        });
+        
+        CheckBox.getChildren().addAll(coalCheckBox, solarCheckBox, crudeOilCheckBox, naturalGasCheckBox, traditionalBiofuelCheckBox);
+        this.setBottom(CheckBox);
     }
 
     // Method for reading csv file
